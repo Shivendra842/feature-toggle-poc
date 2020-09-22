@@ -1,5 +1,14 @@
 # feature-toggle-poc
 
+## Overview
+```
+Open source  'vue-js-toggle-button' library is used for toggle buttons. Bootstrap is used for basic styling.
+vue version 2.x is used
+```
+## Toggle Button library
+```
+https://github.com/euvl/vue-js-toggle-button
+```
 ## Project setup
 ```
 npm install
