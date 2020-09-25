@@ -2,120 +2,90 @@
   <div>
     <div class="container-fluid mt-4">
       <div class="row">
-        <div class="col-6 col-sm-2">
+        <div class="col-4 col-sm-3">
           <toggle-button
             :value="switchA"
-            :color="customColor"
             :labels="true"
             v-model="switchA"
             class="button"
+             :sync="true"
           />
         </div>
-        <div class="col-6 col-sm-1">
-          {{ switchA }}
-        </div>
-        <div class="col-12 col-sm-9">
-          custom color for ON and OFF
+        <div class="col-8 col-sm-9">
+        Location
         </div>
       </div>
       <hr />
       <div class="row">
-        <div class="col-6 col-sm-2">
+        <div class="col-4 col-sm-3">
           <toggle-button
             :value="switchB"
-            color="red"
             :labels="true"
             v-model="switchB"
+             :sync="true"
           />
         </div>
-        <div class="col-6 col-sm-1">
-          {{ switchB }}
-        </div>
-        <div class="col-12 col-sm-9">
-          This button is on by default
+        <div class="col-8 col-sm-9">
+          Bluetooth
         </div>
       </div>
       <hr />
       <div class="row">
-        <div class="col-6 col-sm-2">
+        <div class="col-4 col-sm-3">
           <toggle-button
             :value="switchC"
-            color="orange"
             :labels="true"
             v-model="switchC"
             class="button"
             :sync="true"
           />
         </div>
-        <div class="col-6 col-sm-1">
-          {{ switchC }}
-        </div>
-        <div class="col-8 col-sm-7">
-          Sync ON, changing state of button from script will change the button
-          view also
-        </div>
-        <div class="col-4 col-sm-2">
-          <button class="btn btn-primary" @click="changeSwitchC">Toggle</button>
+        <div class="col-8 col-sm-9">
+          Wi-fi
         </div>
       </div>
       <hr />
       <div class="row">
-        <div class="col-6 col-sm-2">
+        <div class="col-4 col-sm-3">
           <toggle-button
             :value="switchD"
-            color="blue"
             :labels="true"
             v-model="switchD"
             class="button"
-            :sync="false"
+           :sync="true"
           />
         </div>
-        <div class="col-6 col-sm-1">
-          {{ switchD }}
-        </div>
-        <div class="col-8 col-sm-7">
-          Sync OFF, changing state of button from script will not change the
-          button view
-        </div>
-        <div class="col-4 col-sm-2">
-          <button class="btn btn-primary" @click="changeSwitchD">Toggle</button>
+        <div class="col-8 col-sm-9">
+          Aeroplane mode
         </div>
       </div>
       <hr />
       <div class="row">
-        <div class="col-6 col-sm-2">
+        <div class="col-4 col-sm-3">
           <toggle-button
             :value="switchE"
-            color="green"
-            :labels="customLabel"
+            :labels="true"
             v-model="switchE"
             class="button"
           />
         </div>
-        <div class="col-6 col-sm-1">
-          {{ switchE }}
-        </div>
-        <div class="col-12 col-sm-9">
-          This has custom label 'Yes' and 'No'
+        <div class="col-8 col-sm-9">
+          Mute
         </div>
       </div>
       <hr />
       <div class="row">
-        <div class="col-6 col-sm-2">
+        <div class="col-4 col-sm-3">
           <toggle-button
             :value="switchF"
-            color="yellow"
             :labels="true"
             v-model="switchF"
             class="button"
-            :disabled="disable"
+             :sync="true"
           />
         </div>
-        <div class="col-6 col-sm-1">
-          {{ switchF }}
-        </div>
-        <div class="col-12 col-sm-9">
-          The button is disabled
+        <div class="col-8 col-sm-9">
+          Hotspot
         </div>
       </div>
     </div>
@@ -123,28 +93,55 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       switchA: false,
-      switchB: true,
+      switchB: false,
       switchC: false,
       switchD: false,
       switchE: false,
-      switchF: true,
-      disable: true,
-      customLabel: { checked: "Yes", unchecked: "No" },
-      customColor: { checked: "green", unchecked: "purple" }
+      switchF: false,
     };
   },
-  methods: {
-    changeSwitchC() {
-      this.switchC = !this.switchC;
+  created(){
+   this.getswitchStatus();
+  },
+  watch:{
+    switchA:function(){
+      this.$store.dispatch('setSwitchA',this.switchA);
     },
-    changeSwitchD() {
-      this.switchD = !this.switchD;
+     switchB:function(){
+      this.$store.dispatch('setSwitchB',this.switchB);
+    },
+     switchC:function(){
+      this.$store.dispatch('setSwitchC',this.switchC);
+    },
+     switchD:function(){
+      this.$store.dispatch('setSwitchD',this.switchD);
+    },
+     switchE:function(){
+      this.$store.dispatch('setSwitchE',this.switchE);
+    },
+     switchF:function(){
+      this.$store.dispatch('setSwitchF',this.switchF);
+    },
+  },
+   computed:{
+      ...mapGetters(['getSwitchA','getSwitchB','getSwitchC','getSwitchD','getSwitchE','getSwitchF',]),
+    },
+    methods:{
+      getswitchStatus(){
+       this.switchA=this.getSwitchA;
+       this.switchB=this.getSwitchB;
+       this.switchC=this.getSwitchC;
+       this.switchD=this.getSwitchD;
+       this.switchE=this.getSwitchE;
+       this.switchF=this.getSwitchF;
+    },
     }
-  }
+   
 };
 </script>
 
